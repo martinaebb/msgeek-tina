@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Corona Tracker API</title>
+ <meta charset="UTF-8" > 
+ 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="css/corona.css" rel="stylesheet" type="text/css">
+        <link href="css/materialize.css" rel="stylesheet" type="text/css">
+        <script src="js/corona.js" type="text/javascript"></script>
+    </head>
+    <body style=" background-image: url(images/Whatsapp-Wallpaper-022.jpg)">
+   
+    <header>
+        <div>Corona Update Tracker</div>
+    </header><br><br><br>
+         <div class="container">
+        <div class="card-panel hoverable">
+   <input type="text" class="input" placeholder="Enter country name..."/>
+  <div class="button"><i class="fa fa-search"></i></div> 
+           <center><i class="fa fa-heartbeat fa-3x"></i><br>
+      <a class="modal-trigger waves-effect waves-light btn" href="#modal1">Measures</a> 
+            </center>
+            
+    </div>  
+             
+            
+ 
+  <!-- Modal Structure --> 
+  <div id="modal1" class="modal modal-fixed-footer"> 
+   <div class="modal-content"> 
+    <h5>Martina Ebbuah</h5> 
+       <ul>
+       <li>Always wear a face mask</li>
+       <li>Always wash your hands under running water</li>
+       <li>use hand sanitizers frequently</li>
+       <li>Abide to socail distancing protocols</li>
+       
+       
+       
+       </ul>
+    
+      
+   </div> 
+   <div class="modal-footer"> 
+       <center>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">okay</a> 
+    
+ </center>
+   </div> 
+  </div> 
+          
+             <div class="card">
+  <div class="tit"><div class="title"><i class="fa fa-flag"></i></div></div></div>
+  <div class="card-panel"  style="background-image: url(images/Cube-1s-200px.gif);">
+  <img src="images/Black_mask_decoration.jpg" width="90"> <div class="title"><mark style="background: -webkit-linear-gradient(-135deg,yellow,red)">Confirmed Cases</mark></div>
+
+      <div class="count confirm"><mark style="background: -webkit-linear-gradient(-135deg,yellow,red)" ></mark></div>
+  </div>
+<div class="card-panel"  style="background-image: url(images/Wedges-3s-200px.gif)">
+   <img src="images/corona.png" width="80"><div class="title">Active Cases</div>
+   
+ <div class="count active"></div>
+  </div>
+ 
+  <div class="card-panel" style="background-image: url(images/Double%20Ring-1s-200px.gif);">
+   <img  src="images/ooo%20emoji.png" width="60"><div class="title">Deaths</div>
+ 
+      <div class="count death"></div>
+  </div>
+  
+  <div class="card-panel"  style="background-image: url(images/Radio-1s-200px.gif);">
+<i class="fa fa-ambulance fa-3x"></i> <div class="title">Recovered</div>
+ 
+      <div class="count recover"></div>
+  </div> 
+        </div>
+        <script>
+var button = document.querySelector(".button");
+button.addEventListener('click',getdata);
+
+ async function getdata(){
+ 
+var input = document.querySelector(".input");
+var confirm = document.querySelector(".confirm");
+var active = document.querySelector(".active");
+var death = document.querySelector(".death");
+var recover = document.querySelector(".recover");
+var title = document.querySelector(".title")
+var country = input.value;
+if(country == ""){
+    alert("Pls input correct value")
+}
+try{
+const res = await fetch('https://covid19.mathdro.id/api/countries/'+ country)
+    const data = await res.json()
+    //console.log(JSON.stringify(data))
+    confirm.innerHTML = data.confirmed.value;
+    death.innerHTML = data.deaths.value;
+    recover.innerHTML = data.recovered.value;
+active.innerHTML = parseInt(data.confirmed.value-(data.recovered.value + data.deaths.value));
+title.innerHTML = input.value.toUpperCase();;
+input.value = "";
+}
+catch(e){
+    alert("Country not found")
+    input.value ="";
+}
+    //alert(data.error.message)
+    }
+        </script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script> 
+ 
+ <script> 
+  $(document).ready(function() 
+  { 
+   // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered 
+   $('.modal-trigger').leanModal(); 
+  }); 
+ </script> 
+ 
+    </body>
+</html>
